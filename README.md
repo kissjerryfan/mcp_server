@@ -127,7 +127,7 @@ a_share_mcp/
 
 ```bash
 # 克隆项目
-git clone [<your-repo-url>](https://github.com/kissjerryfan/mcp_server.git)
+git clone https://github.com/kissjerryfan/mcp_server.git
 cd mcp_server
 ```
 

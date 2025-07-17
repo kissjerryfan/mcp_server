@@ -55,6 +55,8 @@ a_share_mcp/
 │       ├── indices.py             # 指数相关工具
 │       ├── market_overview.py     # 市场概览工具
 │       ├── macroeconomic.py       # 宏观经济数据工具
+│       ├── technical_indicators.py # 技术指标工具
+│       ├── valuation_analysis.py  # 估值分析工具
 │       ├── date_utils.py          # 日期工具
 │       └── analysis.py            # 分析工具
 │
@@ -79,18 +81,21 @@ a_share_mcp/
   </tr>
   <tr>
     <td align="center"><img src="https://img.icons8.com/fluency/48/null/economic-improvement.png" width="30px"/><br><b>宏观经济数据</b></td>
-    <td align="center"><img src="https://img.icons8.com/fluency/48/null/statistics.png" width="30px"/><br><b>指数成分股</b></td>
-    <td align="center"><img src="https://img.icons8.com/fluency/48/null/fine-print.png" width="30px"/><br><b>数据分析报告</b></td>
+    <td align="center"><img src="https://img.icons8.com/fluency/48/null/statistics.png" width="30px"/><br><b>技术指标分析</b></td>
+    <td align="center"><img src="https://img.icons8.com/fluency/48/null/fine-print.png" width="30px"/><br><b>估值分析工具</b></td>
   </tr>
 </table>
 </div>
 
-## 先决条件
+## 系统要求
 
-1. **Python 环境**: Python 3.10+
-2. **依赖管理**: 使用 `uv` 包管理器安装依赖
-3. **数据来源**: 基于 Baostock 数据源，无需付费账号。在此感谢 Baostock。
-4. 提醒：本项目于 Windows 环境下开发。
+| 项目 | 要求 | 说明 |
+|:---|:---|:---|
+| **Python版本** | 3.10+ | 推荐使用最新稳定版 |
+| **操作系统** | Windows/Linux/MacOS | 全平台支持 |
+| **数据源** | Baostock (免费) | 无需付费API，感谢Baostock |
+| **可选依赖** | pandas-ta | 用于高级技术指标计算 |
+| **内存要求** | 推荐2GB+ | 用于大数据量处理 |
 
 ## 数据更新时间
 
@@ -110,19 +115,50 @@ a_share_mcp/
 
 > 所以说，在交易日的当天，如果是在 17:30 之前询问当天的数据，是无法获取到的。
 
-## 安装环境
+## 快速开始
+
+### 1. 环境要求
+- Python 3.10 或更高版本
+- pip 包管理器
+
+### 2. 安装依赖
 
 在项目根目录下执行：
 
-要启动 A 股 MCP 服务器，请按照以下步骤操作：
+```bash
+# 克隆项目
+git clone <your-repo-url>
+cd a-share-mcp-server
+
+# 安装基础依赖
+pip install -r requirements.txt
+
+# 可选：安装技术指标分析库（用于高级技术指标计算）
+pip install pandas-ta
+```
+
+### 3. 运行服务器
 
 ```bash
-# 使用 requirements.txt 安装依赖
+python mcp_server.py
 ```
 
-## 运行代码
-```
-python mcp_server.py
+服务器启动后，将在端口3000上运行，并支持MCP协议连接。
+
+### 4. 配置AI助手
+
+将以下配置添加到您的AI助手（如Claude Desktop、CherryStudio等）的MCP配置中：
+
+```json
+{
+  "mcpServers": {
+    "a-share-mcp": {
+      "command": "python",
+      "args": ["path/to/your/mcp_server.py"],
+      "cwd": "path/to/your/project"
+    }
+  }
+}
 ```
 
 
@@ -193,9 +229,40 @@ python mcp_server.py
         </td>
         <td>
           <ul>
-            <!-- <li><code>get_current_date</code></li> -->
             <li><code>get_latest_trading_date</code></li>
             <li><code>get_stock_analysis</code></li>
+          </ul>
+        </td>
+      </tr>
+      <tr>
+        <th>📊 技术指标分析</th>
+        <th>💰 估值分析工具</th>
+        <th>🔧 其他工具</th>
+      </tr>
+      <tr valign="top">
+        <td>
+          <ul>
+            <li><code>get_technical_indicators</code></li>
+            <li><code>get_moving_averages</code></li>
+            <li><code>calculate_bollinger_bands</code></li>
+            <li><code>calculate_macd</code></li>
+            <li><code>calculate_rsi</code></li>
+          </ul>
+        </td>
+        <td>
+          <ul>
+            <li><code>get_valuation_metrics</code></li>
+            <li><code>calculate_peg_ratio</code></li>
+            <li><code>calculate_ddm_valuation</code></li>
+            <li><code>calculate_dcf_valuation</code></li>
+            <li><code>get_comparable_analysis</code></li>
+          </ul>
+        </td>
+        <td>
+          <ul>
+            <li><code>get_market_analysis_timeframe</code></li>
+            <li><code>format_trading_calendar</code></li>
+            <li><code>validate_stock_code</code></li>
           </ul>
         </td>
       </tr>
@@ -203,7 +270,61 @@ python mcp_server.py
   </details>
 </div>
 
+## MCP工具接口说明
 
+本服务器通过MCP协议向AI助手提供A股数据查询工具。
+
+### 📚 完整接口文档
+
+详细的工具接口说明请参考：**[DOCUMENTS.md](./DOCUMENTS.md)**
+
+该文档包含：
+- 🔧 **所有工具函数的详细参数说明**
+- 📝 **输入输出格式规范**  
+- 💡 **使用示例和最佳实践**
+- 🏗️ **各模块功能架构说明**
+
+### 🚀 快速接口预览
+
+```python
+# 基础数据查询
+get_stock_basic_info(code="sh.600519")
+get_historical_k_data(code="sz.000001", start_date="2024-01-01", end_date="2024-01-31")
+
+# 财务分析
+get_profit_data(code="sz.002594", year="2023", quarter="4")
+get_balance_data(code="sz.002594", year="2023", quarter="4")
+
+# 技术指标
+get_technical_indicators(code="sz.300750", start_date="2024-01-01", end_date="2024-01-31")
+calculate_risk_metrics(code="sh.600519", period="1Y")
+
+# 估值分析
+get_valuation_metrics(code="sz.000858")
+calculate_dcf_valuation(code="sh.600519", years_back=5)
+calculate_ddm_valuation(code="sh.600000", discount_rate=0.10)
+
+# 市场数据
+get_all_stock()
+get_hs300_stocks()
+get_trade_dates(start_date="2024-01-01", end_date="2024-12-31")
+
+# 宏观经济
+get_deposit_rate_data()
+get_shibor_data(start_date="2024-01-01", end_date="2024-12-31")
+```
+
+## 功能亮点
+
+- **🚀 零配置启动**：基于免费Baostock数据源，无需付费API
+- **🎯 AI原生设计**：专为AI助手优化的查询接口和数据格式
+- **📊 全面数据覆盖**：涵盖基本面、技术面、宏观面等9大维度
+- **⚡ 实时更新**：支持最新交易日数据查询
+- **🔧 模块化架构**：易于扩展和定制化开发
+
+## 贡献指南
+
+欢迎提交 Issue 或 Pull Request 来帮助改进项目。贡献前请先查看现有 Issue 和文档。
 
 ## 许可证
 

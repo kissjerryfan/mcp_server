@@ -484,6 +484,19 @@
 
 ---
 
+#### **calculate_ddm_valuation**
+使用股息贴现模型(DDM)计算股票的内在价值。
+
+* **参数:**
+    * `code` (string, 必需): 股票代码 (例如, 'sh.600000', 'sz.000001')。
+    * `years_back` (integer, 可选): 使用多少年的历史数据来计算增长率。默认5年。
+    * `discount_rate` (float, 可选): 贴现率/要求回报率。默认10% (0.10)。
+    * `terminal_growth_rate` (float, 可选): 永续增长率。默认2.5% (0.025)。
+* **返回:**
+    * DDM估值分析报告（Markdown格式），包括内在价值计算、增长率假设、敏感性分析等。
+
+---
+
 #### **calculate_dcf_valuation**
 计算DCF（现金流贴现）估值，基于历史现金流数据进行未来现金流预测和贴现。
 
